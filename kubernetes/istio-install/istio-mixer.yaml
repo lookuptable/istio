@@ -76,6 +76,9 @@ data:
     subject: namespace:ns
     revision: "2022"
     rules:
+    - selector: target.service == "logic.demo.svc.cluster.local"
+      aspects:
+      - kind: denials
     - selector: true
       aspects:
       - kind: quotas

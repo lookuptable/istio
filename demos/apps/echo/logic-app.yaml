@@ -28,6 +28,7 @@ spec:
         app: logic
         version: unversioned
     spec:
+      serviceAccountName: logic-sa
       containers:
       - name: app
         image: docker.io/istio/app:2017-03-17-22.11.25
@@ -42,4 +43,9 @@ spec:
         ports:
         - containerPort: 8080
         - containerPort: 80
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: logic-sa
 ---

@@ -76,7 +76,7 @@ data:
     subject: namespace:ns
     revision: "2022"
     rules:
-    - selector: target.service == "logic.demo.svc.cluster.local"
+    - selector: origin.user == "istio:logic-sa.demo.cluster.local"
       aspects:
       - kind: denials
     - selector: true

@@ -22,11 +22,19 @@ data:
         params:
       - name: default
         impl: denyChecker
+      - name: default
+        kind: lists
+        impl: genericListChecker
+        params:
+          list_entries:
+            - "istio:echo-sa.demo.cluster.local"
     manifests:
       - name: istio-proxy
         revision: "1"
         attributes:
         - name: source.name
+          value_type: 1 # STRING
+        - name: origin.user
           value_type: 1 # STRING
         - name: source.uid
           value_type: 1 # STRING
@@ -76,9 +84,14 @@ data:
     subject: namespace:ns
     revision: "2022"
     rules:
-    - selector: origin.user == "istio:logic-sa.demo.cluster.local"
+    - selector: true
       aspects:
-      - kind: denials
+      - kind: lists
+        inputs:
+          origin.user: origin.user
+        params:
+          blacklist: false
+          check_expression: origin.user
     - selector: true
       aspects:
       - kind: quotas
@@ -147,7 +160,7 @@ spec:
           - --serviceConfigFile=/etc/opt/mixer/serviceconfig.yml
           - --logtostderr
           - -v
-          - "3"
+          - "4"
         volumeMounts:
           - mountPath: /etc/opt/mixer
             name: config
